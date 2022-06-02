@@ -1,4 +1,6 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/aymanbarham/CLionProjects/Wet2 -B /Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug
+"C:\Program Files\JetBrains\CLion 2021.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "C:\Users\omarz\OneDrive - Technion\Desktop\מבני נתונים 234218\Wet2"
+CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
+  CMake 3.22 or higher is required.  You are running version 3.21.1
+
+
+-- Configuring incomplete, errors occurred!
