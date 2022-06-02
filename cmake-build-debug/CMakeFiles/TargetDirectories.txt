@@ -1,0 +1,3 @@
+/Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug/CMakeFiles/Wet2.dir
+/Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
