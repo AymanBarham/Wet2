@@ -17,6 +17,8 @@ class AVLTree {
         shared_ptr<TreeNode> father;
         shared_ptr<T> data;
         int height;
+        int numberOfSons;
+        int gradeOfSubtree;
     };
 
     Pred predicate;
@@ -24,7 +26,6 @@ class AVLTree {
     shared_ptr<TreeNode> max;
     shared_ptr<TreeNode> min;
     int size; // initialize size
-
 
     void empty() {
         if(size > 0){
@@ -110,8 +111,10 @@ class AVLTree {
         // toAdd < target
         if (predicate(toAdd->data, target->data)) {
             target->left = insertNode(toAdd, target->left, target);
+//            target->numberOfSons += 1;
         } else { // target >= toAdd
             target->right = insertNode(toAdd, target->right, target);
+//            target->numberOfSons += 1;
         }
 
         target->height = maxInt(getHeight(target->left), getHeight(target->right)) + 1;

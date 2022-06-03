@@ -49,7 +49,7 @@ public:
         T* newArray = new T[2 * size];
         for(int i = 0 ; i <  max ; ++i)
         {
-            newArray[i] = array[i];
+            newArray[i] = array[i];// need to check if an exception is thrown
         }
         delete[] array;
         array = newArray;
