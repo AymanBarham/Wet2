@@ -111,10 +111,10 @@ class AVLTree {
         // toAdd < target
         if (predicate(toAdd->data, target->data)) {
             target->left = insertNode(toAdd, target->left, target);
-            target->numberOfSons += 1;
+//            target->numberOfSons += 1;
         } else { // target >= toAdd
             target->right = insertNode(toAdd, target->right, target);
-            target->numberOfSons += 1;
+//            target->numberOfSons += 1;
         }
 
         target->height = maxInt(getHeight(target->left), getHeight(target->right)) + 1;

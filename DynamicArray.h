@@ -13,7 +13,7 @@ private:
 public:
     T& operator[](int index)
     {
-        if(index > size)
+        if(index > max)
         {
             //throw
         }
@@ -21,7 +21,7 @@ public:
     }
     const T& operator[](int index)const
     {
-        if(index > size)
+        if(index > max)
         {
             //throw
         }
@@ -30,10 +30,10 @@ public:
 
     ~DynamicArray()
     {
-        delete[] array
+        delete[] array;
     }
 
-    DynamicArray(): array(new T[2]), size(0), max(2) {};
+    DynamicArray(): array(new T[2]), size(0), max(2) {}
 
     void push(T& data)
     {
@@ -41,7 +41,7 @@ public:
         {
             enlarge();
         }
-        arr[size++] = data;
+        array[size++] = data;
     }
 
     void enlarge()
