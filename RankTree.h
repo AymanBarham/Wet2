@@ -63,7 +63,8 @@ class AVLTree {
         node->right = nullptr;
         node->father = nullptr;
         node->height = 0;
-
+        node->numberOfSons = 0;
+        node->gradeOfSubTree = data->grade;
         return node;
     }
     shared_ptr<TreeNode> findNode(shared_ptr<TreeNode> treeNode, shared_ptr<T> toFind) const {
@@ -101,10 +102,19 @@ class AVLTree {
     int getHeight(shared_ptr<TreeNode> node) const {
         return node == nullptr ? -1 : node->height;
     }
+    int getNumOfSons(shared_ptr<TreeNode> node) const {
+        return node == nullptr ? 0 : node->numberOfSons;
+    }
+    int getGradeOfSubTree(shared_ptr<TreeNode> node) const {
+        return node == nullptr ? 0 : node->gradeOfSubTree;
+    }
+
     shared_ptr<TreeNode> insertNode(shared_ptr<TreeNode> toAdd, shared_ptr<TreeNode> target,
                                     shared_ptr<TreeNode> targetFather) {
         if (target == nullptr) {
             toAdd->father = targetFather;
+            toAdd->numberOfSons = 1;
+            toAdd->gradeOfSubtree = toAdd->grade;
             return toAdd;
         }
 
@@ -116,7 +126,8 @@ class AVLTree {
             target->right = insertNode(toAdd, target->right, target);
 //            target->numberOfSons += 1;
         }
-
+        target->numberOfSons = getNumOfSons(target->left) + getNumOfSons(target->right) + 1;
+        target->gradeOfSubtree = getGradeOfSubTree(target->left) + getGradeOfSubTree(target->right) + target->gradeOfSubtree;
         target->height = maxInt(getHeight(target->left), getHeight(target->right)) + 1;
 
         target = balanceTree(target);
@@ -160,9 +171,11 @@ class AVLTree {
         shared_ptr<TreeNode> toBalance = toRemove->father;
         removeNodeWithLessThanTwoSons(toRemove);
 
-
         while (toBalance) {
             toBalance->height = maxInt(getHeight(toBalance->left), getHeight(toBalance->right)) + 1;
+            toBalance->numberOfSons = getNumOfSons(toBalance->right) + getNumOfSons(toBalance->left) + 1;
+            toBalance->gradeOfSubtree = getGradeOfSubTree(toBalance->right) + getGradeOfSubTree(toBalance->left) + toBalance->gradeOfSubtree;
+
             balanceTree(toBalance);
             toBalance = toBalance->father;
         }
@@ -245,6 +258,12 @@ class AVLTree {
         leftSon->right = node;
         node->father = leftSon;
 
+        node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
+
+        leftSon->numberOfSons = getNumOfSons(leftSon->right) + getNumOfSons(leftSon->left) + 1;
+        leftSon->gradeOfSubtree = getGradeOfSubTree(leftSon->right) + getGradeOfSubTree(leftSon->left) + leftSon->gradeOfSubtree;
+
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
     }
     void rotateRR(shared_ptr<TreeNode> node) {
@@ -266,6 +285,13 @@ class AVLTree {
 
         rightSon->left = node;
         node->father = rightSon;
+
+        node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
+
+        rightSon->numberOfSons = getNumOfSons(rightSon->right) + getNumOfSons(rightSon->left) + 1;
+        rightSon->gradeOfSubtree = getGradeOfSubTree(rightSon->right) + getGradeOfSubTree(rightSon->left) + rightSon->gradeOfSubtree;
+
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
     }
