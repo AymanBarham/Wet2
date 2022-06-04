@@ -1,7 +1,7 @@
 
 #ifndef AVLTREE_H_DYNAMICARRAY_H
 #define AVLTREE_H_DYNAMICARRAY_H
-
+#define INIT_SIZE 2
 template<class T>
 class DynamicArray
 {
@@ -33,7 +33,8 @@ public:
         delete[] array;
     }
 
-    DynamicArray(): array(new T[2]), size(0), max(2) {}
+    DynamicArray(): array(new T[INIT_SIZE]), size(0), max(2) {}
+    DynamicArray(const int size): array(new T[size]), size(0), max(size){}
 
     void push(T& data)
     {
