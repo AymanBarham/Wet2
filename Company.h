@@ -13,11 +13,11 @@ using std::shared_ptr;
 class Company {
 public:
     int id;
-    int value;
+    double value;
     AVLTree<Employee, CompareEmpByID> employeesByID;
     AVLTree<Employee, CompareEmpBySalary> employeesBySalary;
 
-    Company(int id, int value): id(id), value(value) {}
+    Company(int id, double value): id(id), value(value) {}
 
     friend bool operator==(const Company& c1, const Company& c2);
 
