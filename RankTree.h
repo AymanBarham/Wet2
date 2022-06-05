@@ -358,6 +358,8 @@ class AVLTree {
         node->right = fromArrayToTree(toBuild, mid + 1, end, node);
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
+        node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
 
         return node;
     }
