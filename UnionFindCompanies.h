@@ -40,40 +40,83 @@ public:
     ~UnionFindCompanies(){
         for (int i = 1; i <=k ; ++i) {
             delete members[i]->company;
-            delete members[i]
+            delete members[i];
         }
         delete[] members;
     }
 
-    UnionTreeNode* find(int id) {
-        return nullptr;
-    }
-    shared_ptr<Company> findCompany(int id) {
-        return nullptr;
-    }
-
-    shared_ptr<Company> unionCompanies(int acquirerID, int targetID)
+    void updateExtraValue(UnionTreeNode* toUpdate, UnionTreeNode* root)
     {
-        UnionTreeNode* acquirer = find(acquirerID);
-        UnionTreeNode* target = find(targetID);
-
-        if (acquirer == target) {
-            return acquirer;
+        if(toUpdate->father == nullptr || toUpdate == root)
+        {
+            return;
         }
+        int sumExtra = 0;
+        UnionTreeNode* firstNode = toUpdate;
+        while(toUpdate->father != root){
+            sumExtra += toUpdate->valueExtra;
+            toUpdate = toUpdate->father;
+        }
+        toUpdate = firstNode;
+        toUpdate->valueExtra = sumExtra;
+    }
 
-        if (acquirer->size > target->size) {
+    //returns the root of toFind in the uptree
+    UnionTreeNode* find(UnionTreeNode* toFind) {
+        if(toFind->father == nullptr)
+        {
+            return toFind;
+        }
+        UnionTreeNode* root = find(toFind->father);
+        updateExtraValue(toFind, root);
+//        toFind->father = root;
+        return root;
+    }
+
+    //returns the main company in the current group
+    shared_ptr<Company> findCompany(int id) {
+        UnionTreeNode* toFind = find(members[id]);
+        return toFind->mainCompany;
+    }
+
+    double getTotalExtraValue(UnionTreeNode* toFind){
+        double totalValue = 0;
+        while (toFind != nullptr){
+            totalValue += toFind->valueExtra;
+            toFind = toFind->father;
+        }
+        return totalValue;
+    }
+
+    shared_ptr<Company> unionCompanies(int acquirerID, int targetID, double factor)
+    {
+        UnionTreeNode* acquirer = find(members[acquirerID]);
+        UnionTreeNode* target = find(members[targetID]);
+        if (acquirer == target) {
+            return acquirer->mainCompany;
+        }
+        shared_ptr<Company> acquirerMain = findCompany(acquirerID);
+        shared_ptr<Company> targetMain = findCompany(targetID);
+
+        if(acquirer->size >= target->size){
+            ////update the size of the group after the union
             acquirer->size += target->size;
+            ////update the value Extra field for the acquirer
+            acquirer->valueExtra += (factor * (targetMain.value + getTotalExtraValue(members[targetMain.id])));
+            ////update the value Extra field for the target
+            target->valueExtra -= (acquirer->valueExtra);
             target->father = acquirer;
-            target->valueExtra -= acquirer->company->value;
-
-            acquirer->mainCompany = acquirer;
-
         }else{
             target->size += acquirer->size;
+            acquirer->valueExtra += ((factor * (targetMain.value + getTotalExtraValue(members[targetMain.id])) - target->valueExtra));
             acquirer->father = target;
-            target->mainCompany = acquirer;
         }
-
+        ////merge the trees of the workers
+        (acquirerMain->employeesWithSalary).merge(targetMain->employeesWithSalary);
+        ////merge the hashes of the workers
+        (acquirerMain->allEmployees).merge(targetMain->allEmployees);
+        ////update the main company
+        target->mainCompany = acquirer->mainCompany;
     }
 
 

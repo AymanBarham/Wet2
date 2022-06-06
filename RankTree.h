@@ -36,6 +36,7 @@ class AVLTree {
             max = nullptr;
         }
     }
+
     void empty_aux(shared_ptr<TreeNode>& toDelete){
         if(!toDelete){
             return;
@@ -67,6 +68,7 @@ class AVLTree {
         node->gradeOfSubTree = data->grade;
         return node;
     }
+
     shared_ptr<TreeNode> findNode(shared_ptr<TreeNode> treeNode, shared_ptr<T> toFind) const {
         if (treeNode == nullptr) {
             return nullptr;
@@ -83,6 +85,7 @@ class AVLTree {
         }
         return findNode(treeNode->right, toFind);
     }
+
     int BF(shared_ptr<TreeNode> treeNode) const {
         int hl = 0, hr = 0;
         if (treeNode->height == 0) {
@@ -99,12 +102,15 @@ class AVLTree {
 
         return hl - hr;
     }
+
     int getHeight(shared_ptr<TreeNode> node) const {
         return node == nullptr ? -1 : node->height;
     }
+
     int getNumOfSons(shared_ptr<TreeNode> node) const {
         return node == nullptr ? 0 : node->numberOfSons;
     }
+
     int getGradeOfSubTree(shared_ptr<TreeNode> node) const {
         return node == nullptr ? 0 : node->gradeOfSubTree;
     }
@@ -135,6 +141,7 @@ class AVLTree {
         target->height = maxInt(getHeight(target->left), getHeight(target->right)) + 1;
         return target;
     }
+
     shared_ptr<TreeNode> balanceTree(shared_ptr<TreeNode> target) {
         if (BF(target) >= -1 && BF(target) <= 1) {
             return target;
@@ -180,6 +187,7 @@ class AVLTree {
             toBalance = toBalance->father;
         }
     }
+
     void removeNodeWithLessThanTwoSons(shared_ptr<TreeNode> toRemove) {
         if (!toRemove->left && !toRemove->right) { // toRemove is a leaf
             if (!toRemove->father) { // root is a leaf
@@ -218,6 +226,7 @@ class AVLTree {
             }
         }
     }
+
     void fixMax() {
         this->max = root;
         if (root) {
@@ -226,6 +235,7 @@ class AVLTree {
             }
         }
     }
+
     void fixMin() {
         this->min = root;
         if (root) {
@@ -234,7 +244,6 @@ class AVLTree {
             }
         }
     }
-
 
     // rotations
     // **** adjust height of changed nodes.
@@ -266,6 +275,7 @@ class AVLTree {
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
     }
+
     void rotateRR(shared_ptr<TreeNode> node) {
         shared_ptr<TreeNode> rightSon = node->right;
 
@@ -295,10 +305,12 @@ class AVLTree {
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
     }
+
     void rotateLR(shared_ptr<TreeNode> node) {
         rotateRR(node->left);
         rotateLL(node);
     }
+
     void rotateRL(shared_ptr<TreeNode> node) {
         rotateLL(node->right);
         rotateRR(node);
@@ -309,6 +321,7 @@ class AVLTree {
     int maxInt(int x1, int x2) const {
         return x1 > x2 ? x1 : x2;
     }
+
     shared_ptr<TreeNode> findFirstBiggerThanAux(shared_ptr<T> data){
         if(!max || predicate(max->data , data)){
             return nullptr;
@@ -372,9 +385,11 @@ class AVLTree {
     }
 public:
     AVLTree() : size(0) {}
+
     ~AVLTree() {
         empty();
     }
+
     class AVLIter;
     // exceptions
     class AlreadyExists : public std::exception {};
@@ -394,11 +409,13 @@ public:
         fixMax();
         fixMin();
     }
+
     // returns nullptr if not found
     shared_ptr<T> find(shared_ptr<T> data) const {
         shared_ptr<TreeNode> toFind = findNode(root, data);
         return !toFind ? nullptr : toFind->data;
     }
+
     // throws DoesntExist
     void remove(shared_ptr<T> data) {
         shared_ptr<TreeNode> toRemove = findNode(root, data);
@@ -410,12 +427,15 @@ public:
         fixMax();
         fixMin();
     }
+
     shared_ptr<T> getMax() const {
         return this->max->data;
     }
+
     int getSize() const {
         return this->size;
     }
+
     bool isEmpty() const {
         return this->size == 0;
     }
@@ -496,9 +516,11 @@ public:
         bool operator==(const AVLIter& iter) {
             return this->current == iter.current;
         }
+
         bool operator!=(const AVLIter& iter) {
             return this->current != iter.current;
         }
+
         AVLIter& operator++() {
             if (current == finish) {
                 current = nullptr;
@@ -535,6 +557,7 @@ public:
     AVLIter begin() const {
         return AVLIter(this->min, this->max);
     }
+
     AVLIter end() const {
         return AVLIter(nullptr , nullptr);
     }
