@@ -9,6 +9,7 @@
 #include <iostream>
 
 using std::shared_ptr;
+using std::weak_tree;
 
 class UnionFindCompanies
 {
@@ -18,7 +19,8 @@ private:
         shared_ptr<UnionTreeNode> father;
         shared_ptr<Company> company;
         double valueExtra;
-        int mainCompanyID;
+        weak_ptr<Company> mainCompany;
+        int size;
     };
 
     UnionTreeNode** members;
@@ -27,24 +29,36 @@ private:
 public:
     explicit UnionFindCompanies(int k): members(new UnionTreeNode*[k + 1]), k(k){
         for (int i = 1; i <= k; ++i) {
-            members[i].company = new Company(i, i);
-            members[i].father = nullptr;
-            members[i].valueExtra = 0;
-            members[i].mainCompanyID = i;
+            members[i] = new UnionTreeNode();
+            members[i]->father = nullptr;
+            members[i]->company = new Company(i, i);
+            members[i]->valueExtra = 0;
+            members[i]->mainCompany = members[i].company;
+            members[i]->size = 1;
         }
     }
+    ~UnionFindCompanies(){
+        for (int i = 1; i <=k ; ++i) {
+            delete members[i]->company;
+            delete members[i]
+        }
+        delete[] members;
+    }
 
+    UnionTreeNode* find(int id) {
+        return nullptr;
+    }
     shared_ptr<Company> findCompany(int id) {
         return nullptr;
     }
 
-    void unionCompanies(int acquirerID, int targetID)
+    shared_ptr<Company> unionCompanies(int acquirerID, int targetID)
     {
         UnionTreeNode* acquirer = find(acquirerID);
         UnionTreeNode* target = find(targetID);
 
         if (acquirer == target) {
-
+            return acquirer;
         }
 
         if (acquirer->size > target->size) {
