@@ -37,6 +37,7 @@ public:
             members[i]->size = 1;
         }
     }
+
     ~UnionFindCompanies(){
         for (int i = 1; i <=k ; ++i) {
             delete members[i]->company;
@@ -118,8 +119,6 @@ public:
         ////update the main company
         target->mainCompany = acquirer->mainCompany;
     }
-
-
 
 };
 

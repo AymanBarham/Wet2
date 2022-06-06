@@ -23,6 +23,7 @@ public:
     unsigned int hash(shared_ptr<Employee> emp) {
         return emp->id % arraySize;
     }
+
     void insert(shared_ptr<Employee> to_add) {
         numberOfElements++;
         array[hash(to_add)].insert(to_add);
@@ -31,6 +32,7 @@ public:
             rehash();
         }
     }
+
     void remove(shared_ptr<Employee> to_remove) {
         numberOfElements--;
         array[hash(to_remove)].remove(to_remove);
@@ -38,9 +40,11 @@ public:
             rehashDown();
         }
     }
+
     bool find(shared_ptr<Employee> to_find) {
         return !array[hash(to_find)].find(to_find);
     }
+
     void rehash() {
         DynamicArray<AVLTree<Employee, CompareEmpByID>> newArray(arraySize * 2);
         int oldSize = arraySize;
@@ -59,6 +63,7 @@ public:
         this->array = newArray;
         newArray = nullptr;
     }
+
     void rehashDown() {
         DynamicArray<AVLTree<Employee, CompareEmpByID>> newArray(arraySize / 2);
         int oldSize = arraySize;
@@ -78,6 +83,7 @@ public:
         newArray = nullptr;
 
     }
+
     void merge(const HashTable& toMergeFrom) {
         DynamicArray<AVLTree<Employee, CompareEmpByID>> newArray((arraySize + toMergeFrom.arraySize) * 2);
         int oldSize = arraySize;
