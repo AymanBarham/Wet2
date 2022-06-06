@@ -19,9 +19,8 @@ public:
 //    AVLTree<Employee, CompareEmpByID> employeesByID;
 //    AVLTree<Employee, CompareEmpBySalary> employeesBySalary;
 
-    RankTree<Employee, CompareEmpByID> employeesWithSalary;
-    HashTable allEmployees;
-
+    RankTree<Employee, CompareEmpBySalary> employeesWithSalary;
+    HashTable companyEmployees;
     Company(int id, double value): id(id), value(value) {}
 
     friend bool operator==(const Company& c1, const Company& c2);

@@ -1,7 +1,7 @@
 
 
-#ifndef WET1_AVLTREE_H
-#define WET1_AVLTREE_H
+#ifndef WET1_RankTree_H
+#define WET1_RankTree_H
 
 #include <iostream>
 #include <memory>
@@ -10,7 +10,7 @@ using std::shared_ptr;
 using std::weak_ptr;
 
 template<class T, class Pred>
-class AVLTree {
+class RankTree {
     struct TreeNode {
         shared_ptr<TreeNode> right;
         shared_ptr<TreeNode> left;
@@ -384,9 +384,9 @@ class AVLTree {
         }
     }
 public:
-    AVLTree() : size(0) {}
+    RankTree() : size(0) {}
 
-    ~AVLTree() {
+    ~RankTree() {
         empty();
     }
 
@@ -455,11 +455,11 @@ public:
         return findLastNodeInSearch(treeNode->right, treeNode ,toFind);
     }
 
-    AVLTree::AVLIter findFirstBiggerThan(shared_ptr<T> data){
+    RankTree::AVLIter findFirstBiggerThan(shared_ptr<T> data){
         return AVLIter(findFirstBiggerThanAux(data) , max);
     }
 
-    void merge(AVLTree<T, Pred>& toMergeFrom) {
+    void merge(RankTree<T, Pred>& toMergeFrom) {
         if (this->size == 0) {
             this->root = toMergeFrom.root;
             this->size = toMergeFrom.size;
@@ -551,7 +551,7 @@ public:
             return current->data;
         }
 
-        friend class AVLTree<T, Pred>;
+        friend class RankTree<T, Pred>;
     };
 
     AVLIter begin() const {
@@ -566,4 +566,4 @@ public:
 
 
 
-#endif //WET1_AVLTREE_H
+#endif //WET1_RankTree_H

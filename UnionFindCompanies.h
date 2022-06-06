@@ -114,7 +114,7 @@ public:
         ////merge the trees of the workers
         (acquirerMain->employeesWithSalary).merge(targetMain->employeesWithSalary);
         ////merge the hashes of the workers
-        (acquirerMain->allEmployees).merge(targetMain->allEmployees);
+        (acquirerMain->companyEmployees).merge(targetMain->companyEmployees);
         ////update the main company
         target->mainCompany = acquirer->mainCompany;
     }
