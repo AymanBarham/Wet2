@@ -21,11 +21,11 @@ private:
         int mainCompanyID;
     };
 
-    UnionTreeNode* members;
+    UnionTreeNode** members;
     int k;
 
 public:
-    explicit UnionFindCompanies(int k): members(new UnionTreeNode[k + 1]), k(k){
+    explicit UnionFindCompanies(int k): members(new UnionTreeNode*[k + 1]), k(k){
         for (int i = 1; i <= k; ++i) {
             members[i].company = new Company(i, i);
             members[i].father = nullptr;
@@ -40,12 +40,26 @@ public:
 
     void unionCompanies(int acquirerID, int targetID)
     {
-        shared_ptr<Company> acquirer = findCompany(acquirerID);
-        shared_ptr<Company> target = findCompany(targetID);
+        UnionTreeNode* acquirer = find(acquirerID);
+        UnionTreeNode* target = find(targetID);
 
         if (acquirer == target) {
 
         }
+
+        if (acquirer->size > target->size) {
+            acquirer->size += target->size;
+            target->father = acquirer;
+            target->valueExtra -= acquirer->company->value;
+
+            acquirer->mainCompany = acquirer;
+
+        }else{
+            target->size += acquirer->size;
+            acquirer->father = target;
+            target->mainCompany = acquirer;
+        }
+
     }
 
 
