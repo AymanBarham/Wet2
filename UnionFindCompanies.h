@@ -70,7 +70,7 @@ public:
         }
         UnionTreeNode* root = find(toFind->father);
         updateExtraValue(toFind, root);
-//        toFind->father = root;
+        toFind->father = root;
         return root;
     }
 
