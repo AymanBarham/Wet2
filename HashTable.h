@@ -42,7 +42,11 @@ public:
     }
 
     bool find(shared_ptr<Employee> to_find) {
-        return !array[hash(to_find)].find(to_find);
+        return array[hash(to_find)].find(to_find);
+    }
+
+    bool findEmployee(shared_ptr<Employee> to_find){
+        return array[hash(to_find)].find(to_find);
     }
 
     void rehash() {

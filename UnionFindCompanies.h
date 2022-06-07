@@ -89,6 +89,10 @@ public:
         return totalValue;
     }
 
+    double getTotalExtraForCompany(int companyID){
+        return getTotalExtraValue(members[companyID]);
+    }
+
     shared_ptr<Company> unionCompanies(int acquirerID, int targetID, double factor)
     {
         UnionTreeNode* acquirer = find(members[acquirerID]);
