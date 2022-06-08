@@ -12,7 +12,7 @@
 #include "Company.h"
 #include "Employee.h"
 #include "CompareEmpByID.h"
-#include "CompareEmpBySalary.h.h"
+#include "CompareEmpBySalary.h"
 #include "library2.h"
 
 #include <iostream>
@@ -55,9 +55,10 @@ public:
             return FAILURE;
         }
         try{
-            allEmployees.insert(employeeID);
             shared_ptr<Company> company = allCompanies->findCompany(companyID);
-            (company->companyEmployees).insert(employeeID);
+            shared_ptr<Employee> toAdd = shared_ptr<Employee>(new Employee(employeeID, grade, 0, company));
+            allEmployees.insert(toAdd);
+            (company->companyEmployees).insert(toAdd);
             ++numOfZeroSalaryEmployees;
             gradeSumOfZeroSalaryEmployees += grade;
             ++numOfZeroSalaryCompany[companyID];
@@ -85,7 +86,7 @@ public:
             ////search employee
             shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
             shared_ptr<Employee> toRemove = allEmployees.findEmployee(tmp);
-            shared_ptr<Company> company = toRemove->Company;
+            shared_ptr<Company> company = toRemove->company.lock();
             ////need to remove from hash + rank Company
             //from hash of company
             (company->companyEmployees).remove(toRemove);
@@ -99,7 +100,7 @@ public:
                 numOfZeroSalaryEmployees--;
             }else{//salary > 0, remove from rank
                 //removing from rank of company
-                (company->employessWithSalary).remove(toRemove);
+                (company->employeesWithSalary).remove(toRemove);
                 //removing from rank of structure
                 allEmployeesWithSalary.remove(toRemove);
             }
@@ -129,7 +130,7 @@ public:
             return INVALID_INPUT;
         }
         try{
-            shared_ptr<Company> mainCompany = allCompanies->unionCompanies(companyID1, companyID2);
+            shared_ptr<Company> mainCompany = allCompanies->unionCompanies(companyID1, companyID2, factor);
             if(mainCompany){
                 numOfZeroSalaryCompany[companyID1] += numOfZeroSalaryCompany[companyID2];
                 numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
@@ -152,7 +153,7 @@ public:
         try{
             shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
             shared_ptr<Employee> employee = allEmployees.findEmployee(tmp);
-            shared_ptr<Company> company = employee->company;
+            shared_ptr<Company> company = (employee->company).lock();
             employee->salary += salaryIncrease;
             if(employee->salary - salaryIncrease == 0){//need to add to rank tree
                 numOfZeroSalaryEmployees--;
@@ -185,7 +186,7 @@ public:
         if(allEmployeesWithSalary.getSize() < m){
             return FAILURE;
         }
-        if(companyID != 0 && )
+//        if(companyID != 0 && )
     }
 
     StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary, void * averageBumpGrade);
@@ -195,7 +196,7 @@ public:
         if(!standing || companyID <= 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
-        (*standing) = allCompanies->getTotalExtraForCompany(companyID);
+        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
         return SUCCESS;
     }
 

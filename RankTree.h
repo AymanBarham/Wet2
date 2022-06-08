@@ -65,7 +65,7 @@ class RankTree {
         node->father = nullptr;
         node->height = 0;
         node->numberOfSons = 0;
-        node->gradeOfSubTree = data->grade;
+        node->gradeOfSubtree = data->grade;
         return node;
     }
 
@@ -112,7 +112,7 @@ class RankTree {
     }
 
     int getGradeOfSubTree(shared_ptr<TreeNode> node) const {
-        return node == nullptr ? 0 : node->gradeOfSubTree;
+        return node == nullptr ? 0 : node->gradeOfSubtree;
     }
 
     shared_ptr<TreeNode> insertNode(shared_ptr<TreeNode> toAdd, shared_ptr<TreeNode> target,
@@ -120,7 +120,7 @@ class RankTree {
         if (target == nullptr) {
             toAdd->father = targetFather;
             toAdd->numberOfSons = 1;
-            toAdd->gradeOfSubtree = toAdd->grade;
+            toAdd->gradeOfSubtree = toAdd->data->grade;
             return toAdd;
         }
 
@@ -500,6 +500,61 @@ public:
         delete[] array1;
         delete[] array2;
         delete[] array3;
+    }
+
+    int sumOfGradeBestM(int m) {
+        shared_ptr<TreeNode> temp = root;
+        int sumOfGrades = 0;
+        int numberOfHigherEmployeesLeft = m;
+        while (temp != nullptr) {
+            if (getNumOfSons(temp->right) > numberOfHigherEmployeesLeft) {
+                temp = temp->right;
+            } else if (getNumOfSons(temp->right) < numberOfHigherEmployeesLeft){
+                sumOfGrades += temp->data->grade + getGradeOfSubTree(temp->right);
+                numberOfHigherEmployeesLeft -= 1 + getNumOfSons(temp->right);
+                temp = temp->left;
+            } else {
+                sumOfGrades += getNumOfSons(temp->right);
+                break;
+            }
+        }
+        return sumOfGrades;
+    }
+
+    int getSumGradeUntilKth(shared_ptr<T> kthEmp) {
+        int sumGrade = 0;
+        shared_ptr<TreeNode> temp = root;
+
+        while (temp != nullptr) {
+            if (predicate(temp->data, kthEmp)) {
+                temp = temp->left;
+            } else if (temp->data == kthEmp){
+                sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
+                break;
+            } else {
+                sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
+                temp = temp->right;
+            }
+        }
+        return sumGrade;
+    }
+
+    int getNumOfNodesUntilKth(shared_ptr<T> kthEmp) {
+        int numOfNodes = 0;
+        shared_ptr<TreeNode> temp = root;
+
+        while (temp != nullptr) {
+            if (predicate(temp->data, kthEmp)) {
+                temp = temp->left;
+            } else if (temp->data == kthEmp){
+                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+                break;
+            } else {
+                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+                temp = temp->right;
+            }
+        }
+        return numOfNodes;
     }
 
     // iterator and merge

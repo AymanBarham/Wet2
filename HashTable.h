@@ -8,6 +8,7 @@
 #include <memory>
 #include "Employee.h"
 #include "AVLTree.h"
+#include "CompareEmpByID.h"
 
 using std::string;
 using std::shared_ptr;
@@ -41,8 +42,14 @@ public:
         }
     }
 
+    bool find(int id) {
+        shared_ptr<Employee> toFind = shared_ptr<Employee>(new Employee(id, 0, 0, nullptr));
+
+        return array[hash(toFind)].find(toFind) != nullptr;
+    }
+
     bool find(shared_ptr<Employee> to_find) {
-        return array[hash(to_find)].find(to_find);
+        return array[hash(to_find)].find(to_find) != nullptr;
     }
 
     shared_ptr<Employee> findEmployee(shared_ptr<Employee> to_find){
@@ -55,17 +62,17 @@ public:
         arraySize = 2 * arraySize;
         try{
             for (int i = 0; i < oldSize; ++i) {
-                for (AVLTree<Employee, CompareEmpBYID>::AVLIter it = array[i].begin(); i != array[i].end() ; ++it){
-                    newArray[hash(*it)].insert(to_add);
+                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
+                    newArray[hash(*it)].insert(*it);
                 }
             }
         } catch (...){
             arraySize = oldSize;
             throw;
         }
-        (this->array)->~DynamicArray();
+        this->array.~DynamicArray();
         this->array = newArray;
-        newArray = nullptr;
+        newArray.array = nullptr;
     }
 
     void rehashDown() {
@@ -74,17 +81,17 @@ public:
         arraySize = arraySize / 2;
         try{
             for (int i = 0; i < oldSize; ++i) {
-                for (AVLTree<Employee, CompareEmpBYID>::AVLIter it = array[i].begin(); i != array[i].end() ; ++it){
-                    newArray[hash(*it)].insert(to_add);
+                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
+                    newArray[hash(*it)].insert(*it);
                 }
             }
         } catch (...){
             arraySize = oldSize;
             throw;
         }
-        (this->array)->~DynamicArray();
+        (this->array).~DynamicArray();
         this->array = newArray;
-        newArray = nullptr;
+        newArray.array = nullptr;
 
     }
 
@@ -95,22 +102,22 @@ public:
         arraySize = (arraySize + toMergeFrom.arraySize) * 2;
         try{
             for (int i = 0; i < oldSize; ++i) {
-                for (AVLTree<Employee, CompareEmpBYID>::AVLIter it = array[i].begin(); i != array[i].end() ; ++it){
-                    newArray[hash(*it)].insert(to_add);
+                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
+                    newArray[hash(*it)].insert(*it);
                 }
             }
             for (int i = 0; i < toMergeSize; ++i) {
-                for (AVLTree<Employee, CompareEmpBYID>::AVLIter it = array[i].begin(); i != array[i].end() ; ++it){
-                    newArray[hash(*it)].insert(to_add);
+                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
+                    newArray[hash(*it)].insert(*it);
                 }
             }
         } catch (...){
             arraySize = oldSize;
             throw;
         }
-        (this->array)->~DynamicArray();
+        (this->array).~DynamicArray();
         this->array = newArray;
-        newArray = nullptr;
+        newArray.array = nullptr;
     }
 
 };

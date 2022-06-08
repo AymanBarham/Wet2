@@ -5,12 +5,11 @@
 template<class T>
 class DynamicArray
 {
-private:
+public:
     T* array;
     int size;
     int max;
 
-public:
     T& operator[](int index)
     {
         if(index > max)
