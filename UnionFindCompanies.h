@@ -93,6 +93,7 @@ public:
         return getTotalExtraValue(members[companyID]);
     }
 
+    //return the main company of the current group
     shared_ptr<Company> unionCompanies(int acquirerID, int targetID, double factor)
     {
         UnionTreeNode* acquirer = find(members[acquirerID]);

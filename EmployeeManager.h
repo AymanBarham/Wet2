@@ -117,12 +117,29 @@ public:
         return SUCCESS;
     }
 
+    ////done
     StatusType AcquireCompany(int companyID1, int companyID2, double factor){
         if(companyID1 <= 0 || companyID1 > numOfCompanies || companyID2 <= 0 || companyID2 > numOfCompanies
             || companyID1 == companyID2 || factor <= 0.0){
             return INVALID_INPUT;
         }
-
+        shared_ptr<Company> acquirer = allCompanies->findCompany(companyID1);
+        shared_ptr<Company> target = allCompanies->findCompany(companyID2);
+        if(acquirer == target){
+            return INVALID_INPUT;
+        }
+        try{
+            shared_ptr<Company> mainCompany = allCompanies->unionCompanies(companyID1, companyID2);
+            if(mainCompany){
+                numOfZeroSalaryCompany[companyID1] += numOfZeroSalaryCompany[companyID2];
+                numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
+                sumOfGradesZeroSalaryCompany[companyID1] += sumOfGradesZeroSalaryCompany[companyID2];
+                sumOfGradesZeroSalaryCompany[companyID2] = sumOfGradesZeroSalaryCompany[companyID1];
+            }
+        }catch (...){//std bad alloc
+            return ALLOCATION_ERROR;
+        }
+        return SUCCESS;
     }
 
     StatusType EmployeeSalaryIncrease(int employeeID, int salaryIncrease){
@@ -132,7 +149,24 @@ public:
         if(allEmployees.find(employeeID)){
             return FAILURE;
         }
-
+        try{
+            shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
+            shared_ptr<Employee> employee = allEmployees.findEmployee(tmp);
+            shared_ptr<Company> company = employee->company;
+            employee->salary += salaryIncrease;
+            if(employee->salary - salaryIncrease == 0){//need to add to rank tree
+                numOfZeroSalaryEmployees--;
+                numOfZeroSalaryCompany[company->id]--;
+                gradeSumOfZeroSalaryEmployees -= employee->grade;
+                sumOfGradesZeroSalaryCompany[company->id] -= employee->grade;
+                //add to rank trees
+                allEmployeesWithSalary.insert(employee);
+                (company->employeesWithSalary).insert(employee);
+            }
+        }catch (...){//std bad alloc
+            return ALLOCATION_ERROR;
+        }
+        return SUCCESS;
     }
 
     StatusType PromoteEmployee(int employeeID, int bumpGrade){
