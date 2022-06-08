@@ -13,6 +13,8 @@
 using std::string;
 using std::shared_ptr;
 
+class Employee;
+
 class HashTable {
     DynamicArray<AVLTree<Employee, CompareEmpByID>> array;
     int arraySize;

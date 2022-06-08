@@ -3,8 +3,8 @@
 #define WET1_EMPLOYEE_H
 
 #include <iostream>
-#include "Company.h"
 #include <memory>
+#include "Company.h"
 
 using std::shared_ptr;
 using std::weak_ptr;

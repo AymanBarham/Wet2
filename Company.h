@@ -12,6 +12,7 @@
 
 using std::shared_ptr;
 
+
 class Company {
 public:
     int id;
