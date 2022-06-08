@@ -24,13 +24,26 @@ class EmployeeManager{
     HashTable allEmployees;
     RankTree<Employee, CompareEmpBySalary> allEmployeesWithSalary;
     int numOfCompanies;
+    int numOfZeroSalaryEmployees;
+    int gradeSumOfZeroSalaryEmployees;
+    int* numOfZeroSalaryCompany;
+    int* sumOfGradesZeroSalaryCompany;
 public:
-    EmployeeManager(int k): allCompanies(new UnionFindCompanies(k)), numOfCompanies(k){}
+    EmployeeManager(int k): allCompanies(new UnionFindCompanies(k)), numOfCompanies(k),
+                            numOfZeroSalaryEmployees(0), gradeSumOfZeroSalaryEmployees(0),
+                            numOfZeroSalaryCompany(new int[k + 1]),
+                            sumOfGradesZeroSalaryCompany(new int[k + 1]){
+        for(int i = 0 ; i < k + 1 ; ++i){
+            numOfZeroSalaryCompany[i] = 0;
+            sumOfGradesZeroSalaryCompany[i] = 0;
+        }
+    }
     ~EmployeeManager(){
         delete allCompanies;
+        delete[] numOfZeroSalaryCompany;
+        delete[] sumOfGradesZeroSalaryCompany;
     }
 
-    //maybe there is no need to do try and catch
 
     ////done
     StatusType AddEmployee(int employeeID, int companyID, int grade){
@@ -45,6 +58,10 @@ public:
             allEmployees.insert(employeeID);
             shared_ptr<Company> company = allCompanies->findCompany(companyID);
             (company->companyEmployees).insert(employeeID);
+            ++numOfZeroSalaryEmployees;
+            gradeSumOfZeroSalaryEmployees += grade;
+            ++numOfZeroSalaryCompany[companyID];
+            sumOfGradesZeroSalaryCompany[companyID] += grade;
         }
         catch (AVLTree<Employee, CompareEmpByID>::AlreadyExists& e){
             return FAILURE;
@@ -65,25 +82,28 @@ public:
             return FAILURE;
         }
         try{
-            ////removing from rank tree of the data structure
-            shared_ptr<Employee> toRemove = shared_ptr<Company>(new Employee(employeeID, 0, 0, nullptr));
-            shared_ptr<Employee> foundToRemove = allEmployeesWithSalary.find(toRemove);
-            if(foundToRemove){
-                allEmployeesWithSalary.remove(foundToRemove);
+            ////search employee
+            shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
+            shared_ptr<Employee> toRemove = allEmployees.findEmployee(tmp);
+            shared_ptr<Company> company = toRemove->Company;
+            ////need to remove from hash + rank Company
+            //from hash of company
+            (company->companyEmployees).remove(toRemove);
+            //from hash of structure
+            allEmployees.remove(toRemove);
+            //check if exists in rankTree with salary = 0
+            if(toRemove->salary == 0){
+                sumOfGradesZeroSalaryCompany[company->id] -= toRemove->grade;
+                numOfZeroSalaryCompany[company->id]--;
+                gradeSumOfZeroSalaryEmployees -= toRemove->grade;
+                numOfZeroSalaryEmployees--;
+            }else{//salary > 0, remove from rank
+                //removing from rank of company
+                (company->employessWithSalary).remove(toRemove);
+                //removing from rank of structure
+                allEmployeesWithSalary.remove(toRemove);
             }
-            ////removing from rank tree of the company of the employee
-            shared_ptr<Employee> empToRemoveFromCompany = allEmployees.findEmployee(toRemove);
-            if(empToRemoveFromCompany){
-                shared_ptr<Company> company = allCompanies->findCompany(empToRemoveFromCompany->company->id);
-                shared_ptr<Employee> foundToRemoveInCompany = company->employeesWithSalary.find(empToRemoveFromCompany);
-                if(foundToRemoveInCompany){
-                    company->employeesWithSalary.remove(find);
-                }
-                ////remove from the hash of the company
-                company->companyEmployees.remove(empToRemoveFromCompany);
-            }
-            ////removing from hash of the data structure
-            allEmployees.remove(employeeID);
+            ////need to remove from hash + rank structure
         }
         catch (AVLTree<Employee, CompareEmpByID>::DoesntExist& e){
             return SUCCESS;

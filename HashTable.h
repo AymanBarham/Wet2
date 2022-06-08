@@ -45,7 +45,7 @@ public:
         return array[hash(to_find)].find(to_find);
     }
 
-    bool findEmployee(shared_ptr<Employee> to_find){
+    shared_ptr<Employee> findEmployee(shared_ptr<Employee> to_find){
         return array[hash(to_find)].find(to_find);
     }
 
