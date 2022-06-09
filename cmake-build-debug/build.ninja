@@ -49,8 +49,14 @@ cmake_ninja_workdir = /Users/aymanbarham/CLionProjects/Wet2/cmake-build-debug/
 
 build cmake_object_order_depends_target_Wet2: phony || CMakeFiles/Wet2.dir
 
-build CMakeFiles/Wet2.dir/main.cpp.o: CXX_COMPILER__Wet2_Debug /Users/aymanbarham/CLionProjects/Wet2/main.cpp || cmake_object_order_depends_target_Wet2
-  DEP_FILE = CMakeFiles/Wet2.dir/main.cpp.o.d
+build CMakeFiles/Wet2.dir/library2.cpp.o: CXX_COMPILER__Wet2_Debug /Users/aymanbarham/CLionProjects/Wet2/library2.cpp || cmake_object_order_depends_target_Wet2
+  DEP_FILE = CMakeFiles/Wet2.dir/library2.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu++11
+  OBJECT_DIR = CMakeFiles/Wet2.dir
+  OBJECT_FILE_DIR = CMakeFiles/Wet2.dir
+
+build CMakeFiles/Wet2.dir/main2_without_bonus.cpp.o: CXX_COMPILER__Wet2_Debug /Users/aymanbarham/CLionProjects/Wet2/main2_without_bonus.cpp || cmake_object_order_depends_target_Wet2
+  DEP_FILE = CMakeFiles/Wet2.dir/main2_without_bonus.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu++11
   OBJECT_DIR = CMakeFiles/Wet2.dir
   OBJECT_FILE_DIR = CMakeFiles/Wet2.dir
@@ -63,7 +69,7 @@ build CMakeFiles/Wet2.dir/main.cpp.o: CXX_COMPILER__Wet2_Debug /Users/aymanbarha
 #############################################
 # Link the executable Wet2
 
-build Wet2: CXX_EXECUTABLE_LINKER__Wet2_Debug CMakeFiles/Wet2.dir/main.cpp.o
+build Wet2: CXX_EXECUTABLE_LINKER__Wet2_Debug CMakeFiles/Wet2.dir/library2.cpp.o CMakeFiles/Wet2.dir/main2_without_bonus.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk
   OBJECT_DIR = CMakeFiles/Wet2.dir
   POST_BUILD = :

@@ -20,7 +20,7 @@ class HashTable {
     int arraySize;
     int numberOfElements;
 public:
-    HashTable() = default;
+    HashTable() : array(), arraySize(INIT_SIZE), numberOfElements(0) {}
     ~HashTable() = default;
 
     unsigned int hash(shared_ptr<Employee> emp) {

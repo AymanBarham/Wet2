@@ -79,7 +79,7 @@ public:
             return INVALID_INPUT;
         }
         //check if there is an employee with id = employeeID
-        if(allEmployees.find(employeeID)){
+        if(!allEmployees.find(employeeID)){
             return FAILURE;
         }
         try{
