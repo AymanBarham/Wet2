@@ -147,7 +147,7 @@ public:
         if(employeeID <= 0 || salaryIncrease <= 0){
             return INVALID_INPUT;
         }
-        if(allEmployees.find(employeeID)){
+        if(!allEmployees.find(employeeID)){
             return FAILURE;
         }
         try{
@@ -174,7 +174,7 @@ public:
         if(employeeID <= 0){
             return INVALID_INPUT;
         }
-        if(allEmployees.find(employeeID)){
+        if(!allEmployees.find(employeeID)){
             return FAILURE;
         }
         if(bumpGrade <= 0){
@@ -284,6 +284,7 @@ public:
             return INVALID_INPUT;
         }
 //        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
+        printf("CompanyValue: %.1f", allCompanies->getTotalExtraForCompany(companyID));
         return SUCCESS;
     }
 
