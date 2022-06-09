@@ -201,8 +201,8 @@ public:
         return SUCCESS;
     }
 
-    StatusType SumOfBumpGradeBetweenTopWorkersByGroup(int companyID, int m, void * sumBumpGrade){
-        if(!sumBumpGrade || companyID > numOfCompanies || companyID < 0 || m <= 0){
+    StatusType SumOfBumpGradeBetweenTopWorkersByGroup(int companyID, int m){
+        if(companyID > numOfCompanies || companyID < 0 || m <= 0){
             return INVALID_INPUT;
         }
         if(allEmployeesWithSalary.getSize() < m){
@@ -213,19 +213,19 @@ public:
             if(company && company->employeesWithSalary.getSize() < m){
                 return FAILURE;
             } else if (company) {
-                *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
-                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+//                *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
+                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", ((long long)(company->employeesWithSalary.sumOfGradeBestM(m))));
                 return SUCCESS;
             }
         }else{
-            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
-            printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+//            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
+            printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", ((long long)(allEmployeesWithSalary.sumOfGradeBestM(m))));
             return SUCCESS;
         }
     }
 
-    StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary, void * averageBumpGrade) {
-        if(!averageBumpGrade || lowerSalary < 0 || higherSalary < 0 || lowerSalary > higherSalary || companyID < 0 || companyID > numOfCompanies){
+    StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary) {
+        if(lowerSalary < 0 || higherSalary < 0 || lowerSalary > higherSalary || companyID < 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
         long double sumOfGrades = 0;
@@ -278,11 +278,11 @@ public:
     }
 
     ////done
-    StatusType CompanyValue(int companyID, void * standing){
-        if(!standing || companyID <= 0 || companyID > numOfCompanies){
+    StatusType CompanyValue(int companyID){
+        if(companyID <= 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
-        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
+//        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
         return SUCCESS;
     }
 
