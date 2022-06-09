@@ -266,10 +266,10 @@ public:
                 return FAILURE;
             }
 
-            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
-            printf("averageBumpGradeBetweenSalaryByGroup: %.1f\n")
+//            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
+            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", ((long double) (sumOfGrades / numOfEmployees)));
 
-        }catch (...){//only bad alloc
+        } catch (...){//only bad alloc
             return ALLOCATION_ERROR;
         }
 
