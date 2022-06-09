@@ -528,10 +528,25 @@ public:
         while (temp != nullptr) {
             if (predicate(temp->data, kthEmp)) {
                 temp = temp->left;
-            } else if (temp->data == kthEmp){
+            } else if (temp->data->salary == kthEmp->salary){
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
                 break;
             } else {
+                sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
+                temp = temp->right;
+            }
+        }
+        return sumGrade;
+    }
+
+    int getSumGradeUntilKthNotIncluding(shared_ptr<T> kthEmp) {
+        int sumGrade = 0;
+        shared_ptr<TreeNode> temp = root;
+
+        while (temp != nullptr) {
+            if (predicate(temp->data, kthEmp) || temp->data->salary == kthEmp->salary) {
+                temp = temp->left;
+            }else {
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
                 temp = temp->right;
             }
@@ -546,7 +561,7 @@ public:
         while (temp != nullptr) {
             if (predicate(temp->data, kthEmp)) {
                 temp = temp->left;
-            } else if (temp->data == kthEmp){
+            } else if (temp->data->salary == kthEmp->salary){
                 numOfNodes += temp->data->grade + getNumOfSons(temp->left);
                 break;
             } else {

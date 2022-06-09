@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <memory>
-#include "Company.h"
+//#include "Company.h"
 
 using std::shared_ptr;
 using std::weak_ptr;

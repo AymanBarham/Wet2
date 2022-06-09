@@ -214,17 +214,68 @@ public:
                 return FAILURE;
             } else if (company) {
                 *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
-                printf("sumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
                 return SUCCESS;
             }
         }else{
             *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
-            printf("sumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+            printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
             return SUCCESS;
         }
     }
 
-    StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary, void * averageBumpGrade);
+    StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary, void * averageBumpGrade) {
+        if(!averageBumpGrade || lowerSalary < 0 || higherSalary < 0 || lowerSalary > higherSalary || companyID < 0 || companyID > numOfCompanies){
+            return INVALID_INPUT;
+        }
+        long double sumOfGrades = 0;
+        long long numOfEmployees = 0;
+        try{
+            shared_ptr<Employee> high = shared_ptr<Employee>(new Employee(0, 0, higherSalary, nullptr));
+            shared_ptr<Employee> low = shared_ptr<Employee>(new Employee(0, 0, lowerSalary, nullptr));
+
+            if(companyID == 0){
+
+                sumOfGrades = allEmployeesWithSalary.getSumGradeUntilKth(high);
+                numOfEmployees = allEmployeesWithSalary.getNumOfNodesUntilKth(high);
+                if(higherSalary != 0){
+                    sumOfGrades -= allEmployeesWithSalary.getSumGradeUntilKthNotIncluding(low);
+                    numOfEmployees -= allEmployeesWithSalary.getNumOfNodesUntilKthNotInclude(low);
+                }
+                if(lowerSalary == 0){
+                    sumOfGrades += gradeSumOfZeroSalaryEmployees;
+                    numOfEmployees += numOfZeroSalaryEmployees;
+                }
+
+
+            } else{
+                shared_ptr<Company> company = allCompanies->findCompany(companyID);
+                sumOfGrades = company->employeesWithSalary.getSumGradeUntilKth(high);
+                numOfEmployees = company->employeesWithSalary.getNumOfNodesUntilKth(high);
+                if(higherSalary != 0){
+                    sumOfGrades -= company->employeesWithSalary.getSumGradeUntilKthNotIncluding(low);
+                    numOfEmployees -= company->employeesWithSalary.getNumOfNodesUntilKthNotInclude(low);
+                }
+                if(lowerSalary == 0){
+                    sumOfGrades += sumOfGradesZeroSalaryCompany[companyID];
+                    numOfEmployees += numOfZeroSalaryCompany[companyID];
+                }
+            }
+
+            if (numOfEmployees == 0) {
+                return FAILURE;
+            }
+
+            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
+            printf("averageBumpGradeBetweenSalaryByGroup: %.1f\n")
+
+        }catch (...){//only bad alloc
+            return ALLOCATION_ERROR;
+        }
+
+        return SUCCESS;
+
+    }
 
     ////done
     StatusType CompanyValue(int companyID, void * standing){
