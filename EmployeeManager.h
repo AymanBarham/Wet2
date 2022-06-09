@@ -214,12 +214,12 @@ public:
                 return FAILURE;
             } else if (company) {
 //                *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
-                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", ((long long)(company->employeesWithSalary.sumOfGradeBestM(m))));
+                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", company->employeesWithSalary.sumOfGradeBestM(m)));
                 return SUCCESS;
             }
         }else{
 //            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
-            printf("SumOfBumpGradeBetweenTopWorkersByGroup: %d\n", ((long long)(allEmployeesWithSalary.sumOfGradeBestM(m))));
+            printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", allEmployeesWithSalary.sumOfGradeBestM(m));
             return SUCCESS;
         }
     }

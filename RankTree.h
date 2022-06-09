@@ -502,10 +502,10 @@ public:
         delete[] array3;
     }
 
-    int sumOfGradeBestM(int m) {
+    long long sumOfGradeBestM(long long m) {
         shared_ptr<TreeNode> temp = root;
-        int sumOfGrades = 0;
-        int numberOfHigherEmployeesLeft = m;
+        long long sumOfGrades = 0;
+        long long numberOfHigherEmployeesLeft = m;
         while (temp != nullptr) {
             if (getNumOfSons(temp->right) > numberOfHigherEmployeesLeft) {
                 temp = temp->right;
@@ -521,8 +521,8 @@ public:
         return sumOfGrades;
     }
 
-    int getSumGradeUntilKth(shared_ptr<T> kthEmp) {
-        int sumGrade = 0;
+    long long getSumGradeUntilKth(shared_ptr<T> kthEmp) {
+        long long sumGrade = 0;
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
@@ -539,8 +539,8 @@ public:
         return sumGrade;
     }
 
-    int getSumGradeUntilKthNotIncluding(shared_ptr<T> kthEmp) {
-        int sumGrade = 0;
+    long long getSumGradeUntilKthNotIncluding(shared_ptr<T> kthEmp) {
+        long long sumGrade = 0;
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
@@ -554,8 +554,8 @@ public:
         return sumGrade;
     }
 
-    int getNumOfNodesUntilKth(shared_ptr<T> kthEmp) {
-        int numOfNodes = 0;
+    long long getNumOfNodesUntilKth(shared_ptr<T> kthEmp) {
+        long long numOfNodes = 0;
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
@@ -572,8 +572,8 @@ public:
         return numOfNodes;
     }
 
-    int getNumOfNodesUntilKthNotInclude(shared_ptr<T> kthEmp) {
-        int numOfNodes = 0;
+    long long getNumOfNodesUntilKthNotInclude(shared_ptr<T> kthEmp) {
+        long long numOfNodes = 0;
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
