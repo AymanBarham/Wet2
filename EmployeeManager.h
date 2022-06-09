@@ -214,7 +214,7 @@ public:
                 return FAILURE;
             } else if (company) {
 //                *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
-                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", company->employeesWithSalary.sumOfGradeBestM(m)));
+                printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", company->employeesWithSalary.sumOfGradeBestM(m));
                 return SUCCESS;
             }
         }else{
