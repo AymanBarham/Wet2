@@ -217,11 +217,12 @@ public:
                 printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", company->employeesWithSalary.sumOfGradeBestM(m));
                 return SUCCESS;
             }
-        }else{
+        } else{
 //            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
             printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", allEmployeesWithSalary.sumOfGradeBestM(m));
             return SUCCESS;
         }
+        return SUCCESS;
     }
 
     StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary) {
