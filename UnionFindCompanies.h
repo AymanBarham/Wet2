@@ -123,6 +123,8 @@ public:
         (acquirerMain->companyEmployees).merge(targetMain->companyEmployees);
         ////update the main company
         target->mainCompany = acquirer->mainCompany;
+
+        return  acquirer->mainCompany.lock();
     }
 
 };
