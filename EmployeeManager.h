@@ -177,6 +177,28 @@ public:
         if(allEmployees.find(employeeID)){
             return FAILURE;
         }
+        if(bumpGrade <= 0){
+            return SUCCESS;
+        }
+        try{
+            shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
+            shared_ptr<Employee> toBump = allEmployees.findEmployee(tmp);
+            toBump->grade += bumpGrade;
+            if(toBump->salary > 0){
+                // to correct additional info in trees !
+                toBump->company.lock()->employeesWithSalary.remove(toBump);
+                allEmployeesWithSalary.remove(toBump);
+                toBump->company.lock()->employeesWithSalary.insert(toBump);
+                allEmployeesWithSalary.insert(toBump);
+            }
+        }catch (RankTree<Employee, CompareEmpBySalary>::DoesntExist& e){
+            return FAILURE;
+        }catch (RankTree<Employee, CompareEmpBySalary>::AlreadyExists& e){//shouldn't reach
+            return FAILURE;
+        }catch (...){//bad alloc
+            return ALLOCATION_ERROR;
+        }
+        return SUCCESS;
     }
 
     StatusType SumOfBumpGradeBetweenTopWorkersByGroup(int companyID, int m, void * sumBumpGrade){
@@ -186,7 +208,20 @@ public:
         if(allEmployeesWithSalary.getSize() < m){
             return FAILURE;
         }
-//        if(companyID != 0 && )
+        if(companyID != 0){
+            shared_ptr<Company> company = allCompanies->findCompany(companyID);
+            if(company && company->employeesWithSalary.getSize() < m){
+                return FAILURE;
+            } else if (company) {
+                *((long long*)sumBumpGrade) = company->employeesWithSalary.sumOfGradeBestM(m);
+                printf("sumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+                return SUCCESS;
+            }
+        }else{
+            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
+            printf("sumOfBumpGradeBetweenTopWorkersByGroup: %d\n", *((long long*)sumBumpGrade));
+            return SUCCESS;
+        }
     }
 
     StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary, void * averageBumpGrade);
