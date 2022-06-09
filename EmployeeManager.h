@@ -136,6 +136,12 @@ public:
                 numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
                 sumOfGradesZeroSalaryCompany[companyID1] += sumOfGradesZeroSalaryCompany[companyID2];
                 sumOfGradesZeroSalaryCompany[companyID2] = sumOfGradesZeroSalaryCompany[companyID1];
+
+                // need to update pointers!
+//                for (RankTree<Employee, CompareEmpBySalary>::AVLIter it = acquirer->employeesWithSalary.begin();
+//                    it != acquirer->employeesWithSalary.end() ; ++it) {
+//                    (*it)->company = acquirer;
+//                }
             }
         }catch (...){//std bad alloc
             return ALLOCATION_ERROR;
@@ -163,6 +169,16 @@ public:
                 //add to rank trees
                 allEmployeesWithSalary.insert(employee);
                 (company->employeesWithSalary).insert(employee);
+            } else { // if we changed his salary we need to re-add him
+                employee->salary -= salaryIncrease;
+
+                allEmployeesWithSalary.remove(employee);
+                company->employeesWithSalary.remove(employee);
+
+                employee->salary += salaryIncrease;
+
+                allEmployeesWithSalary.insert(employee);
+                company->employeesWithSalary.insert(employee);
             }
         }catch (...){//std bad alloc
             return ALLOCATION_ERROR;

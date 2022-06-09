@@ -133,7 +133,7 @@ class RankTree {
 //            target->numberOfSons += 1;
         }
         target->numberOfSons = getNumOfSons(target->left) + getNumOfSons(target->right) + 1;
-        target->gradeOfSubtree = getGradeOfSubTree(target->left) + getGradeOfSubTree(target->right) + target->gradeOfSubtree;
+        target->gradeOfSubtree = getGradeOfSubTree(target->left) + getGradeOfSubTree(target->right) + target->data->grade;
         target->height = maxInt(getHeight(target->left), getHeight(target->right)) + 1;
 
         target = balanceTree(target);
@@ -181,7 +181,7 @@ class RankTree {
         while (toBalance) {
             toBalance->height = maxInt(getHeight(toBalance->left), getHeight(toBalance->right)) + 1;
             toBalance->numberOfSons = getNumOfSons(toBalance->right) + getNumOfSons(toBalance->left) + 1;
-            toBalance->gradeOfSubtree = getGradeOfSubTree(toBalance->right) + getGradeOfSubTree(toBalance->left) + toBalance->gradeOfSubtree;
+            toBalance->gradeOfSubtree = getGradeOfSubTree(toBalance->right) + getGradeOfSubTree(toBalance->left) + toBalance->data->grade;
 
             balanceTree(toBalance);
             toBalance = toBalance->father;
@@ -268,10 +268,10 @@ class RankTree {
         node->father = leftSon;
 
         node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
-        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->data->grade;
 
         leftSon->numberOfSons = getNumOfSons(leftSon->right) + getNumOfSons(leftSon->left) + 1;
-        leftSon->gradeOfSubtree = getGradeOfSubTree(leftSon->right) + getGradeOfSubTree(leftSon->left) + leftSon->gradeOfSubtree;
+        leftSon->gradeOfSubtree = getGradeOfSubTree(leftSon->right) + getGradeOfSubTree(leftSon->left) + leftSon->data->grade;
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
     }
@@ -297,10 +297,10 @@ class RankTree {
         node->father = rightSon;
 
         node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
-        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->data->grade;
 
         rightSon->numberOfSons = getNumOfSons(rightSon->right) + getNumOfSons(rightSon->left) + 1;
-        rightSon->gradeOfSubtree = getGradeOfSubTree(rightSon->right) + getGradeOfSubTree(rightSon->left) + rightSon->gradeOfSubtree;
+        rightSon->gradeOfSubtree = getGradeOfSubTree(rightSon->right) + getGradeOfSubTree(rightSon->left) + rightSon->data->grade;
 
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
@@ -372,7 +372,7 @@ class RankTree {
 
         node->height = maxInt(getHeight(node->left), getHeight(node->right)) + 1;
         node->numberOfSons = getNumOfSons(node->right) + getNumOfSons(node->left) + 1;
-        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->gradeOfSubtree;
+        node->gradeOfSubtree = getGradeOfSubTree(node->right) + getGradeOfSubTree(node->left) + node->data->grade;
 
         return node;
     }
@@ -514,7 +514,7 @@ public:
                 numberOfHigherEmployeesLeft -= 1 + getNumOfSons(temp->right);
                 temp = temp->left;
             } else {
-                sumOfGrades += getNumOfSons(temp->right);
+                sumOfGrades += getGradeOfSubTree(temp->right);
                 break;
             }
         }
