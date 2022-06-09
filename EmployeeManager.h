@@ -284,7 +284,7 @@ public:
             return INVALID_INPUT;
         }
 //        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
-        printf("CompanyValue: %.1f", allCompanies->getTotalExtraForCompany(companyID));
+        printf("CompanyValue: %.1f\n", allCompanies->getTotalExtraForCompany(companyID) + companyID);
         return SUCCESS;
     }
 

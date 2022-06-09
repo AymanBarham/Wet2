@@ -23,6 +23,9 @@ public:
     HashTable() : array(), arraySize(INIT_SIZE), numberOfElements(0) {}
     ~HashTable() = default;
 
+    int getSize() const {
+        return numberOfElements;
+    }
     unsigned int hash(shared_ptr<Employee> emp) {
         return emp->id % arraySize;
     }
@@ -109,7 +112,7 @@ public:
                 }
             }
             for (int i = 0; i < toMergeSize; ++i) {
-                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
+                for (AVLTree<Employee, CompareEmpByID>::AVLIter it = toMergeFrom.array[i].begin(); it != toMergeFrom.array[i].end() ; ++it){
                     newArray[hash(*it)].insert(*it);
                 }
             }

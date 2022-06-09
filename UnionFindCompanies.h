@@ -52,7 +52,7 @@ public:
         {
             return;
         }
-        int sumExtra = 0;
+        int sumExtra = toUpdate->valueExtra;
         UnionTreeNode* firstNode = toUpdate;
         while(toUpdate->father != root){
             sumExtra += toUpdate->valueExtra;
