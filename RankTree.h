@@ -557,6 +557,21 @@ public:
         return numOfNodes;
     }
 
+    int getNumOfNodesUntilKthNotInclude(shared_ptr<T> kthEmp) {
+        int numOfNodes = 0;
+        shared_ptr<TreeNode> temp = root;
+
+        while (temp != nullptr) {
+            if (predicate(temp->data, kthEmp) || temp->data->salary == kthEmp->salary) {
+                temp = temp->left;
+            } else {
+                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+                temp = temp->right;
+            }
+        }
+        return numOfNodes;
+    }
+
     // iterator and merge
     class AVLIter {
         shared_ptr<TreeNode> current;
