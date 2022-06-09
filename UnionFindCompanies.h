@@ -122,7 +122,7 @@ public:
         ////merge the hashes of the workers
         (acquirerMain->companyEmployees).merge(targetMain->companyEmployees);
         ////update the main company
-//        target->mainCompany = acquirer->mainCompany;
+        target->mainCompany = acquirer->mainCompany;
     }
 
 };
