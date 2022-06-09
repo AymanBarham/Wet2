@@ -190,6 +190,9 @@ public:
                 allEmployeesWithSalary.remove(toBump);
                 toBump->company.lock()->employeesWithSalary.insert(toBump);
                 allEmployeesWithSalary.insert(toBump);
+            } else {
+                gradeSumOfZeroSalaryEmployees += bumpGrade;
+                sumOfGradesZeroSalaryCompany[toBump->company.lock()->id] += bumpGrade;
             }
         }catch (RankTree<Employee, CompareEmpBySalary>::DoesntExist& e){
             return FAILURE;
@@ -247,7 +250,6 @@ public:
                     sumOfGrades += gradeSumOfZeroSalaryEmployees;
                     numOfEmployees += numOfZeroSalaryEmployees;
                 }
-
 
             } else{
                 shared_ptr<Company> company = allCompanies->findCompany(companyID);

@@ -526,11 +526,11 @@ public:
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
-            if (predicate(temp->data, kthEmp)) {
-                temp = temp->left;
-            } else if (temp->data->salary == kthEmp->salary){
+            if (temp->data->salary == kthEmp->salary) {
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
-                break;
+                break; // no break need to check right tree for equal salary emps
+            } else if (predicate(kthEmp, temp->data)) {
+                temp = temp->left;
             } else {
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
                 temp = temp->right;
@@ -544,7 +544,7 @@ public:
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
-            if (predicate(temp->data, kthEmp) || temp->data->salary == kthEmp->salary) {
+            if (predicate(kthEmp, temp->data) || temp->data->salary == kthEmp->salary) {
                 temp = temp->left;
             }else {
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
@@ -559,13 +559,14 @@ public:
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
-            if (predicate(temp->data, kthEmp)) {
-                temp = temp->left;
-            } else if (temp->data->salary == kthEmp->salary){
-                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+            if (temp->data->salary == kthEmp->salary) {
+                numOfNodes += 1 + getNumOfSons(temp->left);
                 break;
+            }
+            else if (predicate(kthEmp, temp->data)) {
+                temp = temp->left;
             } else {
-                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+                numOfNodes += 1 + getNumOfSons(temp->left);
                 temp = temp->right;
             }
         }
@@ -577,10 +578,10 @@ public:
         shared_ptr<TreeNode> temp = root;
 
         while (temp != nullptr) {
-            if (predicate(temp->data, kthEmp) || temp->data->salary == kthEmp->salary) {
+            if (predicate(kthEmp, temp->data) || temp->data->salary == kthEmp->salary) {
                 temp = temp->left;
             } else {
-                numOfNodes += temp->data->grade + getNumOfSons(temp->left);
+                numOfNodes += 1 + getNumOfSons(temp->left);
                 temp = temp->right;
             }
         }

@@ -17,7 +17,7 @@ public:
     bool operator()(shared_ptr<Employee> e1, shared_ptr<Employee> e2) const {
         if (e1->salary == e2->salary) {
             CompareEmpByID comparer;
-            return !comparer(e1, e2);
+            return comparer(e1, e2);
         }
         return e1->salary < e2->salary;
     }
