@@ -507,6 +507,9 @@ public:
         long long sumOfGrades = 0;
         long long numberOfHigherEmployeesLeft = m;
         while (temp != nullptr) {
+//            if (numberOfHigherEmployeesLeft == 0) {
+//                break;
+//            }
             if (getNumOfSons(temp->right) > numberOfHigherEmployeesLeft) {
                 temp = temp->right;
             } else if (getNumOfSons(temp->right) < numberOfHigherEmployeesLeft){

@@ -124,6 +124,13 @@ public:
         ////update the main company
         target->mainCompany = acquirer->mainCompany;
 
+
+        for (RankTree<Employee, CompareEmpBySalary>::AVLIter it = acquirer->mainCompany.lock()->employeesWithSalary.begin();
+                it != acquirer->mainCompany.lock()->employeesWithSalary.end(); ++it) {
+            (*it)->company = acquirer->mainCompany;
+        }
+
+
         return  acquirer->mainCompany.lock();
     }
 

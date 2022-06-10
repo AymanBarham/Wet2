@@ -5,6 +5,7 @@
 #ifndef WET2_EmployeeManager_H
 #define WET2_EmployeeManager_H
 
+#include <cmath>
 #include "UnionFindCompanies.h"
 #include "HashTable.h"
 #include "RankTree.h"
@@ -136,12 +137,6 @@ public:
                 numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
                 sumOfGradesZeroSalaryCompany[companyID1] += sumOfGradesZeroSalaryCompany[companyID2];
                 sumOfGradesZeroSalaryCompany[companyID2] = sumOfGradesZeroSalaryCompany[companyID1];
-
-                // need to update pointers!
-//                for (RankTree<Employee, CompareEmpBySalary>::AVLIter it = acquirer->employeesWithSalary.begin();
-//                    it != acquirer->employeesWithSalary.end() ; ++it) {
-//                    (*it)->company = acquirer;
-//                }
             }
         }catch (...){//std bad alloc
             return ALLOCATION_ERROR;
@@ -286,7 +281,7 @@ public:
             }
 
 //            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
-            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", ((double) (sumOfGrades / numOfEmployees)));
+            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
 
         } catch (...){//only bad alloc
             return ALLOCATION_ERROR;
