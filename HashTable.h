@@ -42,9 +42,9 @@ public:
     void remove(shared_ptr<Employee> to_remove) {
         numberOfElements--;
         array[hash(to_remove)].remove(to_remove);
-        if((double)numberOfElements <= (double)((arraySize) / 4)){
-            rehashDown();
-        }
+//        if((double)numberOfElements <= (double)((arraySize) / 4)){
+//            rehashDown();
+//        }
     }
 
     bool find(int id) {
