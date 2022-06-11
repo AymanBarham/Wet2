@@ -55,8 +55,8 @@ public:
         int sumExtra = toUpdate->valueExtra;
         UnionTreeNode* firstNode = toUpdate;
         while(toUpdate->father != root){
-            sumExtra += toUpdate->valueExtra;
             toUpdate = toUpdate->father;
+            sumExtra += toUpdate->valueExtra;
         }
         toUpdate = firstNode;
         toUpdate->valueExtra = sumExtra;

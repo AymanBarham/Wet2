@@ -62,8 +62,8 @@ public:
             (company->companyEmployees).insert(toAdd);
             ++numOfZeroSalaryEmployees;
             gradeSumOfZeroSalaryEmployees += grade;
-            ++numOfZeroSalaryCompany[companyID];
-            sumOfGradesZeroSalaryCompany[companyID] += grade;
+            ++numOfZeroSalaryCompany[company->id];
+            sumOfGradesZeroSalaryCompany[company->id] += grade;
         }
         catch (AVLTree<Employee, CompareEmpByID>::AlreadyExists& e){
             return FAILURE;
@@ -87,7 +87,7 @@ public:
             ////search employee
             shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
             shared_ptr<Employee> toRemove = allEmployees.findEmployee(tmp);
-            shared_ptr<Company> company = toRemove->company.lock();
+            shared_ptr<Company> company = allCompanies->findCompany(toRemove->company.lock()->id);
             ////need to remove from hash + rank Company
             //from hash of company
             (company->companyEmployees).remove(toRemove);
@@ -108,10 +108,10 @@ public:
             ////need to remove from hash + rank structure
         }
         catch (AVLTree<Employee, CompareEmpByID>::DoesntExist& e){
-            return SUCCESS;
+            return FAILURE;
         }
         catch (RankTree<Employee, CompareEmpByID>::DoesntExist& e){
-            return SUCCESS;
+            return FAILURE;
         }
         catch (...){//bad alloc
             return ALLOCATION_ERROR;
@@ -133,10 +133,10 @@ public:
         try{
             shared_ptr<Company> mainCompany = allCompanies->unionCompanies(companyID1, companyID2, factor);
             if(mainCompany){
-                numOfZeroSalaryCompany[companyID1] += numOfZeroSalaryCompany[companyID2];
-                numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
-                sumOfGradesZeroSalaryCompany[companyID1] += sumOfGradesZeroSalaryCompany[companyID2];
-                sumOfGradesZeroSalaryCompany[companyID2] = sumOfGradesZeroSalaryCompany[companyID1];
+                numOfZeroSalaryCompany[mainCompany->id] += numOfZeroSalaryCompany[target->id];
+//                numOfZeroSalaryCompany[companyID2] = numOfZeroSalaryCompany[companyID1];
+                sumOfGradesZeroSalaryCompany[mainCompany->id] += sumOfGradesZeroSalaryCompany[target->id];
+//                sumOfGradesZeroSalaryCompany[companyID2] = sumOfGradesZeroSalaryCompany[companyID1];
             }
         }catch (...){//std bad alloc
             return ALLOCATION_ERROR;
@@ -154,7 +154,7 @@ public:
         try{
             shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
             shared_ptr<Employee> employee = allEmployees.findEmployee(tmp);
-            shared_ptr<Company> company = (employee->company).lock();
+            shared_ptr<Company> company = allCompanies->findCompany((employee->company).lock()->id);
             employee->salary += salaryIncrease;
             if(employee->salary - salaryIncrease == 0){//need to add to rank tree
                 numOfZeroSalaryEmployees--;
@@ -194,16 +194,17 @@ public:
         try{
             shared_ptr<Employee> tmp = shared_ptr<Employee>(new Employee(employeeID, 0, 0, nullptr));
             shared_ptr<Employee> toBump = allEmployees.findEmployee(tmp);
+            shared_ptr<Company> company = allCompanies->findCompany(toBump->company.lock()->id);
             toBump->grade += bumpGrade;
             if(toBump->salary > 0){
                 // to correct additional info in trees !
-                toBump->company.lock()->employeesWithSalary.remove(toBump);
+                company->employeesWithSalary.remove(toBump);
                 allEmployeesWithSalary.remove(toBump);
-                toBump->company.lock()->employeesWithSalary.insert(toBump);
+                company->employeesWithSalary.insert(toBump);
                 allEmployeesWithSalary.insert(toBump);
             } else {
                 gradeSumOfZeroSalaryEmployees += bumpGrade;
-                sumOfGradesZeroSalaryCompany[toBump->company.lock()->id] += bumpGrade;
+                sumOfGradesZeroSalaryCompany[company->id] += bumpGrade;
             }
         }catch (RankTree<Employee, CompareEmpBySalary>::DoesntExist& e){
             return FAILURE;
@@ -231,7 +232,7 @@ public:
                 printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", company->employeesWithSalary.sumOfGradeBestM(m));
                 return SUCCESS;
             }
-        } else{
+        } else {
 //            *((long long*)sumBumpGrade) = allEmployeesWithSalary.sumOfGradeBestM(m);
             printf("SumOfBumpGradeBetweenTopWorkersByGroup: %lld\n", allEmployeesWithSalary.sumOfGradeBestM(m));
             return SUCCESS;
@@ -271,8 +272,8 @@ public:
                     numOfEmployees -= company->employeesWithSalary.getNumOfNodesUntilKthNotInclude(low);
                 }
                 if(lowerSalary == 0){
-                    sumOfGrades += sumOfGradesZeroSalaryCompany[companyID];
-                    numOfEmployees += numOfZeroSalaryCompany[companyID];
+                    sumOfGrades += sumOfGradesZeroSalaryCompany[company->id];
+                    numOfEmployees += numOfZeroSalaryCompany[company->id];
                 }
             }
 

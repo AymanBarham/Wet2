@@ -531,7 +531,7 @@ public:
         while (temp != nullptr) {
             if (temp->data->salary == kthEmp->salary) {
                 sumGrade += temp->data->grade + getGradeOfSubTree(temp->left);
-                break; // no break need to check right tree for equal salary emps
+                temp = temp->right;
             } else if (predicate(kthEmp, temp->data)) {
                 temp = temp->left;
             } else {
@@ -564,7 +564,7 @@ public:
         while (temp != nullptr) {
             if (temp->data->salary == kthEmp->salary) {
                 numOfNodes += 1 + getNumOfSons(temp->left);
-                break;
+                temp = temp->right;
             }
             else if (predicate(kthEmp, temp->data)) {
                 temp = temp->left;
