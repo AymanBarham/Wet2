@@ -28,23 +28,23 @@ typedef enum {
 } StatusType;
 
 
-void *Init(long k);
+void *Init(int k);
 
-StatusType AddEmployee(void *DS, long employeeID, long companyID, long grade);
+StatusType AddEmployee(void *DS, int employeeID, int companyID, int grade);
 
-StatusType RemoveEmployee(void *DS, long employeeID);
+StatusType RemoveEmployee(void *DS, int employeeID);
 
-StatusType AcquireCompany(void *DS, long companyID1, long companyID2, double factor);
+StatusType AcquireCompany(void *DS, int companyID1, int companyID2, double factor);
 
-StatusType EmployeeSalaryIncrease(void *DS, long employeeID, long salaryIncrease);
+StatusType EmployeeSalaryIncrease(void *DS, int employeeID, int salaryIncrease);
 
-StatusType PromoteEmployee(void *DS, long employeeID, long bumpGrade);
+StatusType PromoteEmployee(void *DS, int employeeID, int bumpGrade);
 
-StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, long companyID, long m);
+StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, int companyID, int m);
 
-StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, long companyID, long lowerSalary, long higherSalary);
+StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, int companyID, int lowerSalary, int higherSalary);
 
-StatusType CompanyValue(void *DS, long companyID);
+StatusType CompanyValue(void *DS, int companyID);
 
 /*
  * 20 polong Bonus function:
