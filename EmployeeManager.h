@@ -282,9 +282,9 @@ public:
             }
 
 //            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
-           // printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
+           // prlongf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
             double averageBumpGrade = (double)sumOfGrades/(double)numOfEmployees;
-            int temp = (int)(averageBumpGrade * 10);
+            long temp = (long)(averageBumpGrade * 10);
             double average = ((double)temp)/10;
             if(std::abs(average + 0.1 - averageBumpGrade) <= 0.0000000001){
                 average += 0.1;
@@ -304,7 +304,7 @@ public:
             return INVALID_INPUT;
         }
 //        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
-        prlongf("CompanyValue: %.1f\n", allCompanies->getTotalExtraForCompany(companyID) + companyID);
+        printf("CompanyValue: %.1f\n", allCompanies->getTotalExtraForCompany(companyID) + companyID);
         return SUCCESS;
     }
 
