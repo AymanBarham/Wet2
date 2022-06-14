@@ -282,14 +282,14 @@ public:
             }
 
 //            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
-           // prlongf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
-            double averageBumpGrade = (double)sumOfGrades/(double)numOfEmployees;
-            long temp = (long)(averageBumpGrade * 10);
-            double average = ((double)temp)/10;
-            if(std::abs(average + 0.1 - averageBumpGrade) <= 0.0000000001){
-                average += 0.1;
-            }
-            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", average);
+            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
+//            double averageBumpGrade = (double)sumOfGrades/(double)numOfEmployees;
+//            long temp = (long)(averageBumpGrade * 10);
+//            double average = ((double)temp)/10;
+//            if(std::abs(average + 0.1 - averageBumpGrade) <= 0.0000000001){
+//                average += 0.1;
+//            }
+//            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", average);
         } catch (...){//only bad alloc
             return ALLOCATION_ERROR;
         }
