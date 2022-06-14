@@ -282,7 +282,9 @@ public:
             }
 
 //            *((long double*) averageBumpGrade) = sumOfGrades / numOfEmployees;
-            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
+            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", (double) (sumOfGrades / numOfEmployees));
+
+//            printf("AverageBumpGradeBetweenSalaryByGroup: %.1f\n", floor(10 * ((double) (sumOfGrades / numOfEmployees)) + 0.5f) / 10);
 //            double averageBumpGrade = (double)sumOfGrades/(double)numOfEmployees;
 //            long temp = (long)(averageBumpGrade * 10);
 //            double average = ((double)temp)/10;
