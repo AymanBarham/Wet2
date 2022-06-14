@@ -244,8 +244,8 @@ public:
         if(lowerSalary < 0 || higherSalary < 0 || lowerSalary > higherSalary || companyID < 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
-        long double sumOfGrades = 0;
-        long long numOfEmployees = 0;
+        double sumOfGrades = 0;
+        long numOfEmployees = 0;
         try{
             shared_ptr<Employee> high = shared_ptr<Employee>(new Employee(0, 0, higherSalary, nullptr));
             shared_ptr<Employee> low = shared_ptr<Employee>(new Employee(0, 0, lowerSalary, nullptr));
