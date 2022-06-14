@@ -4,75 +4,75 @@
 
 
 
-void *Init(long k){
+void *Init(int k){
     if(k <= 0){
         return NULL;
     }
-    EmployeeManager* EM = new EmployeeManager(k);
+    EmployeeManager* EM = new EmployeeManager((long)k);
     return EM;
 }
 
-StatusType AddEmployee(void *DS, long employeeID, long companyID, long grade) {
+StatusType AddEmployee(void *DS, int employeeID, int companyID, int grade) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->AddEmployee(employeeID, companyID, grade);
+    return ((EmployeeManager*)DS)->AddEmployee((long)employeeID, (long)companyID,(long) grade);
 }
 
-StatusType RemoveEmployee(void *DS, long employeeID) {
+StatusType RemoveEmployee(void *DS, int employeeID) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->RemoveEmployee(employeeID);
+    return ((EmployeeManager*)DS)->RemoveEmployee((long)employeeID);
 }
 
-StatusType AcquireCompany(void *DS, long companyID1, long companyID2, double factor) {
+StatusType AcquireCompany(void *DS, int companyID1, int companyID2, double factor) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->AcquireCompany(companyID1, companyID2, factor);
+    return ((EmployeeManager*)DS)->AcquireCompany((long)companyID1,(long) companyID2, factor);
 }
 
-StatusType EmployeeSalaryIncrease(void *DS, long employeeID, long salaryIncrease) {
+StatusType EmployeeSalaryIncrease(void *DS, int employeeID, int salaryIncrease) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->EmployeeSalaryIncrease(employeeID, salaryIncrease);
+    return ((EmployeeManager*)DS)->EmployeeSalaryIncrease((long)employeeID, (long)salaryIncrease);
 }
 
-StatusType PromoteEmployee(void *DS, long employeeID, long bumpGrade) {
+StatusType PromoteEmployee(void *DS, int employeeID, int bumpGrade) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->PromoteEmployee(employeeID, bumpGrade);
-}
-
-// no polonger
-StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, long companyID, long m) {
-    if (!DS) {
-        return INVALID_INPUT;
-    }
-    return ((EmployeeManager*)DS)->SumOfBumpGradeBetweenTopWorkersByGroup(companyID, m);
-}
-// no polonger
-StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, long companyID, long lowerSalary, long higherSalary) {
-    if (!DS) {
-        return INVALID_INPUT;
-    }
-    return ((EmployeeManager*)DS)->AverageBumpGradeBetweenSalaryByGroup(companyID, lowerSalary, higherSalary);
+    return ((EmployeeManager*)DS)->PromoteEmployee((long)employeeID,(long) bumpGrade);
 }
 
 // no polonger
-StatusType CompanyValue(void *DS, long companyID){
+StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, int companyID, int m) {
     if (!DS) {
         return INVALID_INPUT;
     }
-    return ((EmployeeManager*)DS)->CompanyValue(companyID);
+    return ((EmployeeManager*)DS)->SumOfBumpGradeBetweenTopWorkersByGroup((long)companyID, (long)m);
+}
+// no polonger
+StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, int companyID, int lowerSalary, int higherSalary) {
+    if (!DS) {
+        return INVALID_INPUT;
+    }
+    return ((EmployeeManager*)DS)->AverageBumpGradeBetweenSalaryByGroup((long)companyID,(long) lowerSalary,(long) higherSalary);
+}
+
+// no polonger
+StatusType CompanyValue(void *DS, int companyID){
+    if (!DS) {
+        return INVALID_INPUT;
+    }
+    return ((EmployeeManager*)DS)->CompanyValue((long)companyID);
 }
 
 /*
  * 20 polong Bonus function:
-StatusType BumpGradeToEmployees(void *DS, long lowerSalary, long higherSalary, long bumpGrade);
+StatusType BumpGradeToEmployees(void *DS, int lowerSalary, int higherSalary, int bumpGrade);
  */
 
 void Quit(void** DS){
