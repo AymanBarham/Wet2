@@ -24,17 +24,17 @@ class EmployeeManager{
     UnionFindCompanies* allCompanies;
     HashTable allEmployees;
     RankTree<Employee, CompareEmpBySalary> allEmployeesWithSalary;
-    int numOfCompanies;
-    int numOfZeroSalaryEmployees;
-    int gradeSumOfZeroSalaryEmployees;
-    int* numOfZeroSalaryCompany;
-    int* sumOfGradesZeroSalaryCompany;
+    long numOfCompanies;
+    long numOfZeroSalaryEmployees;
+    long gradeSumOfZeroSalaryEmployees;
+    long* numOfZeroSalaryCompany;
+    long* sumOfGradesZeroSalaryCompany;
 public:
-    EmployeeManager(int k): allCompanies(new UnionFindCompanies(k)), numOfCompanies(k),
+    EmployeeManager(long k): allCompanies(new UnionFindCompanies(k)), numOfCompanies(k),
                             numOfZeroSalaryEmployees(0), gradeSumOfZeroSalaryEmployees(0),
-                            numOfZeroSalaryCompany(new int[k + 1]),
-                            sumOfGradesZeroSalaryCompany(new int[k + 1]){
-        for(int i = 0 ; i < k + 1 ; ++i){
+                            numOfZeroSalaryCompany(new long[k + 1]),
+                            sumOfGradesZeroSalaryCompany(new long[k + 1]){
+        for(long i = 0 ; i < k + 1 ; ++i){
             numOfZeroSalaryCompany[i] = 0;
             sumOfGradesZeroSalaryCompany[i] = 0;
         }
@@ -47,7 +47,7 @@ public:
 
 
     ////done
-    StatusType AddEmployee(int employeeID, int companyID, int grade){
+    StatusType AddEmployee(long employeeID, long companyID, long grade){
         if(employeeID <= 0 || companyID <= 0 || companyID > numOfCompanies || grade < 0){
             return INVALID_INPUT;
         }
@@ -75,7 +75,7 @@ public:
     }
 
     ////done
-    StatusType RemoveEmployee(int employeeID){
+    StatusType RemoveEmployee(long employeeID){
         if(employeeID <= 0){
             return INVALID_INPUT;
         }
@@ -120,7 +120,7 @@ public:
     }
 
     ////done
-    StatusType AcquireCompany(int companyID1, int companyID2, double factor){
+    StatusType AcquireCompany(long companyID1, long companyID2, double factor){
         if(companyID1 <= 0 || companyID1 > numOfCompanies || companyID2 <= 0 || companyID2 > numOfCompanies
             || companyID1 == companyID2 || factor <= 0.0){
             return INVALID_INPUT;
@@ -144,7 +144,7 @@ public:
         return SUCCESS;
     }
 
-    StatusType EmployeeSalaryIncrease(int employeeID, int salaryIncrease){
+    StatusType EmployeeSalaryIncrease(long employeeID, long salaryIncrease){
         if(employeeID <= 0 || salaryIncrease <= 0){
             return INVALID_INPUT;
         }
@@ -181,7 +181,7 @@ public:
         return SUCCESS;
     }
 
-    StatusType PromoteEmployee(int employeeID, int bumpGrade){
+    StatusType PromoteEmployee(long employeeID, long bumpGrade){
         if(employeeID <= 0){
             return INVALID_INPUT;
         }
@@ -216,7 +216,7 @@ public:
         return SUCCESS;
     }
 
-    StatusType SumOfBumpGradeBetweenTopWorkersByGroup(int companyID, int m){
+    StatusType SumOfBumpGradeBetweenTopWorkersByGroup(long companyID, long m){
         if(companyID > numOfCompanies || companyID < 0 || m <= 0){
             return INVALID_INPUT;
         }
@@ -240,7 +240,7 @@ public:
         return SUCCESS;
     }
 
-    StatusType AverageBumpGradeBetweenSalaryByGroup(int companyID, int lowerSalary, int higherSalary) {
+    StatusType AverageBumpGradeBetweenSalaryByGroup(long companyID, long lowerSalary, long higherSalary) {
         if(lowerSalary < 0 || higherSalary < 0 || lowerSalary > higherSalary || companyID < 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
@@ -293,12 +293,12 @@ public:
     }
 
     ////done
-    StatusType CompanyValue(int companyID){
+    StatusType CompanyValue(long companyID){
         if(companyID <= 0 || companyID > numOfCompanies){
             return INVALID_INPUT;
         }
 //        *((double*)standing) = allCompanies->getTotalExtraForCompany(companyID);
-        printf("CompanyValue: %.1f\n", allCompanies->getTotalExtraForCompany(companyID) + companyID);
+        prlongf("CompanyValue: %.1f\n", allCompanies->getTotalExtraForCompany(companyID) + companyID);
         return SUCCESS;
     }
 

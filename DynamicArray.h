@@ -7,10 +7,10 @@ class DynamicArray
 {
 public:
     T* array;
-    int size;
-    int max;
+    long size;
+    long max;
 
-    T& operator[](int index)
+    T& operator[](long index)
     {
         if(index > max)
         {
@@ -18,7 +18,7 @@ public:
         }
         return array[index];
     }
-    const T& operator[](int index)const
+    const T& operator[](long index)const
     {
         if(index > max)
         {
@@ -33,7 +33,7 @@ public:
     }
 
     DynamicArray(): array(new T[INIT_SIZE]), size(0), max(2) {}
-    DynamicArray(const int size): array(new T[size]), size(0), max(size){}
+    DynamicArray(const long size): array(new T[size]), size(0), max(size){}
 
     void push(T& data)
     {
@@ -47,7 +47,7 @@ public:
     void enlarge()
     {
         T* newArray = new T[2 * size];
-        for(int i = 0 ; i <  max ; ++i)
+        for(long i = 0 ; i <  max ; ++i)
         {
             newArray[i] = array[i];// need to check if an exception is thrown
         }
@@ -59,7 +59,7 @@ public:
     void decreaseSize()
     {
         T* newArray = new T[size * 2];
-        for(int i = 0 ; i <  size ; ++i)
+        for(long i = 0 ; i <  size ; ++i)
         {
             newArray[i] = array[i];
         }

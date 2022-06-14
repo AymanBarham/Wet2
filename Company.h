@@ -15,14 +15,14 @@ using std::shared_ptr;
 
 class Company {
 public:
-    int id;
+    long id;
     double value;
 //    AVLTree<Employee, CompareEmpByID> employeesByID;
 //    AVLTree<Employee, CompareEmpBySalary> employeesBySalary;
 
     RankTree<Employee, CompareEmpBySalary> employeesWithSalary;
     HashTable companyEmployees;
-    Company(int id, double value): id(id), value(value) {}
+    Company(long id, double value): id(id), value(value) {}
 
     friend bool operator==(const Company& c1, const Company& c2);
 

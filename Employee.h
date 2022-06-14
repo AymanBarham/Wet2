@@ -14,12 +14,12 @@ class Company;
 
 class Employee {
 public:
-    int id;
-    int grade;
-    int salary;
+    long id;
+    long grade;
+    long salary;
     weak_ptr<Company> company;
 
-    Employee(int id, int grade, int salary, shared_ptr<Company> company): id(id),
+    Employee(long id, long grade, long salary, shared_ptr<Company> company): id(id),
                 grade(grade), salary(salary), company(company) {}
 
     friend bool operator==(const Employee& e1, const Employee& e2);

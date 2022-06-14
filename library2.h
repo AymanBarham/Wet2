@@ -1,6 +1,6 @@
 /****************************************************************************/
 /*                                                                          */
-/* This file contains the interface functions                               */
+/* This file contains the longerface functions                               */
 /* you should use for the wet ex 2                                          */
 /*                                                                          */
 /****************************************************************************/
@@ -28,27 +28,27 @@ typedef enum {
 } StatusType;
 
 
-void *Init(int k);
+void *Init(long k);
 
-StatusType AddEmployee(void *DS, int employeeID, int companyID, int grade);
+StatusType AddEmployee(void *DS, long employeeID, long companyID, long grade);
 
-StatusType RemoveEmployee(void *DS, int employeeID);
+StatusType RemoveEmployee(void *DS, long employeeID);
 
-StatusType AcquireCompany(void *DS, int companyID1, int companyID2, double factor);
+StatusType AcquireCompany(void *DS, long companyID1, long companyID2, double factor);
 
-StatusType EmployeeSalaryIncrease(void *DS, int employeeID, int salaryIncrease);
+StatusType EmployeeSalaryIncrease(void *DS, long employeeID, long salaryIncrease);
 
-StatusType PromoteEmployee(void *DS, int employeeID, int bumpGrade);
+StatusType PromoteEmployee(void *DS, long employeeID, long bumpGrade);
 
-StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, int companyID, int m);
+StatusType SumOfBumpGradeBetweenTopWorkersByGroup(void *DS, long companyID, long m);
 
-StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, int companyID, int lowerSalary, int higherSalary);
+StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, long companyID, long lowerSalary, long higherSalary);
 
-StatusType CompanyValue(void *DS, int companyID);
+StatusType CompanyValue(void *DS, long companyID);
 
 /*
- * 20 point Bonus function:
-StatusType BumpGradeToEmployees(void *DS, int lowerSalary, int higherSalary, int bumpGrade);
+ * 20 polong Bonus function:
+StatusType BumpGradeToEmployees(void *DS, long lowerSalary, long higherSalary, long bumpGrade);
  */
 
 void Quit(void** DS);

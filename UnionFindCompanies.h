@@ -20,15 +20,15 @@ private:
         shared_ptr<Company> company;
         double valueExtra;
         weak_ptr<Company> mainCompany;
-        int size;
+        long size;
     };
 
     UnionTreeNode** members;
-    int k;
+    long k;
 
 public:
-    explicit UnionFindCompanies(int k): members(new UnionTreeNode*[k + 1]), k(k){
-        for (int i = 1; i <= k; ++i) {
+    explicit UnionFindCompanies(long k): members(new UnionTreeNode*[k + 1]), k(k){
+        for (long i = 1; i <= k; ++i) {
             members[i] = new UnionTreeNode();
             members[i]->father = nullptr;
             members[i]->company = shared_ptr<Company>(new Company(i, i));
@@ -39,7 +39,7 @@ public:
     }
 
     ~UnionFindCompanies(){
-        for (int i = 1; i <=k ; ++i) {
+        for (long i = 1; i <=k ; ++i) {
             members[i]->company.reset();
             delete members[i];
         }
@@ -52,7 +52,7 @@ public:
         {
             return;
         }
-        int sumExtra = toUpdate->valueExtra;
+        double sumExtra = toUpdate->valueExtra;
         UnionTreeNode* firstNode = toUpdate;
         while(toUpdate->father != root){
             toUpdate = toUpdate->father;
@@ -75,7 +75,7 @@ public:
     }
 
     //returns the main company in the current group
-    shared_ptr<Company> findCompany(int id) {
+    shared_ptr<Company> findCompany(long id) {
         UnionTreeNode* toFind = find(members[id]);
         return toFind->mainCompany.lock();
     }
@@ -89,12 +89,12 @@ public:
         return totalValue;
     }
 
-    double getTotalExtraForCompany(int companyID){
+    double getTotalExtraForCompany(long companyID){
         return getTotalExtraValue(members[companyID]);
     }
 
     //return the main company of the current group
-    shared_ptr<Company> unionCompanies(int acquirerID, int targetID, double factor)
+    shared_ptr<Company> unionCompanies(long acquirerID, long targetID, double factor)
     {
         UnionTreeNode* acquirer = find(members[acquirerID]);
         UnionTreeNode* target = find(members[targetID]);

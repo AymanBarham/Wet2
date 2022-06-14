@@ -16,14 +16,14 @@ class AVLTree {
         shared_ptr<TreeNode> left;
         shared_ptr<TreeNode> father;
         shared_ptr<T> data;
-        int height;
+        long height;
     };
 
     Pred predicate;
     shared_ptr<TreeNode> root;
     shared_ptr<TreeNode> max;
     shared_ptr<TreeNode> min;
-    int size; // initialize size
+    long size; // initialize size
 
 
     void empty() {
@@ -81,8 +81,8 @@ class AVLTree {
         }
         return findNode(treeNode->right, toFind);
     }
-    int BF(shared_ptr<TreeNode> treeNode) const {
-        int hl = 0, hr = 0;
+    long BF(shared_ptr<TreeNode> treeNode) const {
+        long hl = 0, hr = 0;
         if (treeNode->height == 0) {
             return hl -hr;
         }
@@ -97,7 +97,7 @@ class AVLTree {
 
         return hl - hr;
     }
-    int getHeight(shared_ptr<TreeNode> node) const {
+    long getHeight(shared_ptr<TreeNode> node) const {
         return node == nullptr ? -1 : node->height;
     }
     shared_ptr<TreeNode> insertNode(shared_ptr<TreeNode> toAdd, shared_ptr<TreeNode> target,
@@ -277,7 +277,7 @@ class AVLTree {
 
 
     // aux
-    int maxInt(int x1, int x2) const {
+    long maxInt(long x1, long x2) const {
         return x1 > x2 ? x1 : x2;
     }
     shared_ptr<TreeNode> findFirstBiggerThanAux(shared_ptr<T> data){
@@ -298,8 +298,8 @@ class AVLTree {
     }
 
     void mergeSortedArrays(shared_ptr<T>* toMergeTo , shared_ptr<T>* toMerge1 , shared_ptr<T>* toMerge2
-                           , int n1 , int n2) const{
-        int i1 = 0 , i2 = 0 , iTo = 0;
+                           , long n1 , long n2) const{
+        long i1 = 0 , i2 = 0 , iTo = 0;
         while(i1 < n1 && i2 < n2){
             if(predicate(toMerge1[i1] , toMerge2[i2])){
                 toMergeTo[iTo] = toMerge1[i1++];
@@ -316,12 +316,12 @@ class AVLTree {
         }
     }
 
-    shared_ptr<TreeNode> fromArrayToTree(shared_ptr<T>* toBuild, int start, int end, shared_ptr<TreeNode> father) const{
+    shared_ptr<TreeNode> fromArrayToTree(shared_ptr<T>* toBuild, long start, long end, shared_ptr<TreeNode> father) const{
         if (start > end) {
             return nullptr;
         }
 
-        int mid = (start + end) / 2;
+        long mid = (start + end) / 2;
 
         shared_ptr<TreeNode> node = initNode(toBuild[mid]);
         node->father = father;
@@ -334,7 +334,7 @@ class AVLTree {
     }
 
     void fromTreeToArray(shared_ptr<T>* toBuildTo) const {
-        int i = 0;
+        long i = 0;
         for (AVLIter avlIter = begin(); avlIter != end() ; ++avlIter) {
             toBuildTo[i++] = *avlIter;
         }
@@ -382,7 +382,7 @@ public:
     shared_ptr<T> getMax() const {
         return this->max->data;
     }
-    int getSize() const {
+    long getSize() const {
         return this->size;
     }
     bool isEmpty() const {
@@ -436,7 +436,7 @@ public:
 
         shared_ptr<TreeNode> newRoot = fromArrayToTree(array3, 0, this->size + toMergeFrom.size - 1, nullptr);
 
-        int oldSize = this->size;
+        long oldSize = this->size;
         empty();
 
         this->root = newRoot;
