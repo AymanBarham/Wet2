@@ -104,7 +104,7 @@ public:
         DynamicArray<AVLTree<Employee, CompareEmpByID>> newArray((arraySize + toMergeFrom.arraySize) * 2);
         long oldSize = arraySize;
         long toMergeSize = toMergeFrom.arraySize;
-        arraySize = (arraySize + toMergeFrom.arraySize) * 2;
+        arraySize = (this->numberOfElements + toMergeFrom.numberOfElements) * 2;
         try{
             for (long i = 0; i < oldSize; ++i) {
                 for (AVLTree<Employee, CompareEmpByID>::AVLIter it = array[i].begin(); it != array[i].end() ; ++it){
@@ -122,6 +122,7 @@ public:
         }
         (this->array).~DynamicArray();
         this->array = newArray;
+        this->numberOfElements += toMergeFrom.numberOfElements;
         newArray.array = nullptr;
     }
 

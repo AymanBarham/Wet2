@@ -1,6 +1,6 @@
 /****************************************************************************/
 /*                                                                          */
-/* This file contains the longerface functions                               */
+/* This file contains the interface functions                               */
 /* you should use for the wet ex 2                                          */
 /*                                                                          */
 /****************************************************************************/
@@ -47,8 +47,8 @@ StatusType AverageBumpGradeBetweenSalaryByGroup(void *DS, int companyID, int low
 StatusType CompanyValue(void *DS, int companyID);
 
 /*
- * 20 polong Bonus function:
-StatusType BumpGradeToEmployees(void *DS, long lowerSalary, long higherSalary, long bumpGrade);
+ * 20 point Bonus function:
+StatusType BumpGradeToEmployees(void *DS, int lowerSalary, int higherSalary, int bumpGrade);
  */
 
 void Quit(void** DS);
